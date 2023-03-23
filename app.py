@@ -4,6 +4,7 @@ from sqlmodel import SQLModel, inspect
 from db.config import engine
 from routes.sedes import sedes
 from routes.carreras import carreras
+from routes.sedecarrera import sedecarrera
 
 APP = FastAPI(title='Instituto Técnico Superior Córdoba API', 
               description='API para proyecto final Prácticas Profesionalizantes II - Tec. Sup. en Desarrollo de Software')
@@ -13,6 +14,7 @@ def Inicio():
     return 'Hello World.'
 APP.include_router(sedes)
 APP.include_router(carreras)
+APP.include_router(sedecarrera)
 
 if __name__=='__main__':
     uvicorn.run('app:APP', reload=True)

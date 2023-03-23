@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel, Table, Column, INTEGER, NVARCHAR, DATE, DATETIME
+from sqlmodel import Table, Column, INTEGER, NVARCHAR, DATE, DATETIME
 from db.config import meta
 
 carreras = Table(
