@@ -17,7 +17,7 @@ def Get_Carreras(descripcion: str = None, session: Session = Depends(Get_Session
     return resultado
 
 @carreras.get('/{id}')
-def Get_Carrera_by_Id(id: int, session: Session = Depends(Get_Session)):
+def Get_Carrera(id: int, session: Session = Depends(Get_Session)):
     resultado = session.execute(select(t_carreras).where(t_carreras.c.CARRERA_ID == id)).first()
     if resultado:
         return resultado
@@ -48,7 +48,7 @@ def Update_Carrera(id: int, carrera: Carrera, session: Session = Depends(Get_Ses
     "PLAN_END_DATE":        carrera.PLAN_END_DATE,
     "LAST_UPDATED_DATE":    datetime.now()       
         }
-        session.execute(t_carreras.update().values(new))
+        session.execute(t_carreras.update().values(new).where(t_carreras.c.CARRERA_ID == id))
         session.commit()
         return session.execute(select(t_carreras).where(t_carreras.c.CARRERA_ID == id)).first()
     raise HTTPException(status_code=404, detail='La carrera solicitada no existe.')
@@ -62,7 +62,7 @@ def Delete_Carreras(id: int, session: Session = Depends(Get_Session)):
         session.t_carreras.update().values(STATUS = 0)
         session.commit()
         return Response(status_code=HTTP_204_NO_CONTENT)
-    elif carrera:
+    else:
         session.execute(t_carreras.delete().where(t_carreras.c.CARRERA_ID == id))
         session.commit()
         return Response(status_code=HTTP_204_NO_CONTENT)

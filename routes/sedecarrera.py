@@ -125,7 +125,7 @@ def UpdateSedeCarrera(id: int, scarrera:SCarrera, session: Session = Depends(Get
     if not old:
         raise HTTPException(status_code=404, detail='La SedeCarrera especificada no existe.')
     
-    session.execute(t_scarrera.update().values(new))
+    session.execute(t_scarrera.update().values(new).where(t_scarrera.c.SEDECARRERA_ID == id))
     session.commit()
 
     return session.execute(select(t_scarrera).where(t_scarrera.c.SEDECARRERA_ID == id)).first()

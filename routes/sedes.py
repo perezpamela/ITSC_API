@@ -71,7 +71,7 @@ def Update_Sede(sede: Sede, id: int, session: Session = Depends(Get_Session)):
     if not old:
         raise HTTPException(status_code=404, detail='La sede especificada no existe.')
     
-    session.execute(t_sedes.update().values(new))
+    session.execute(t_sedes.update().values(new).where(t_sedes.c.SEDE_ID == id))
     session.commit()
     return session.execute(select(t_sedes).where(t_sedes.c.SEDE_ID == id)).first()
 
