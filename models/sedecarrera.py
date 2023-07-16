@@ -4,7 +4,7 @@ from db.config import meta
 sedecarrera = Table(
     "SEDECARRERA",
     meta,
-    Column("SEDECARRERA_ID", INTEGER, primary_key=True,autoincrement=True),
+    Column("SEDECARRERA_ID", INTEGER, autoincrement=True, primary_key=True),
     Column("CARRERA_ID", INTEGER, ForeignKey('CARRERAS.CARRERA_ID', ondelete='SET NULL')),
     Column("SEDE_ID", INTEGER, ForeignKey('SEDES.SEDE_ID', ondelete='SET NULL')),
     Column("TURNO", NVARCHAR(10)),

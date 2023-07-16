@@ -4,6 +4,7 @@ from starlette.status import HTTP_204_NO_CONTENT
 from sqlmodel import select
 from datetime import datetime
 from models.sedes import sedes as t_sedes
+from models.sedecarrera import sedecarrera as t_scarrera
 from schemas.sedes import Sede
 sedes = APIRouter(prefix='/API/SEDES')
 
@@ -79,13 +80,13 @@ def Update_Sede(sede: Sede, id: int, session: Session = Depends(Get_Session)):
 def Delete_Sede(id: int, session: Session = Depends(Get_Session)):
     ''' Elimina si el registro todavía no está relacionado. Desactiva (status 0) si ya hay relaciones creadas.'''
     sede = session.execute(select(t_sedes).where(t_sedes.c.SEDE_ID == id)).first()
-    has_children = False #session.execute(select(t_sedecarrera).where(t._sedecarrera.SEDE_ID == sede.SEDE_ID))
+    has_children = session.execute(select(t_scarrera).where(t_scarrera.SEDE_ID == sede.SEDE_ID)).first()
 
     if has_children:
         session.t_sedes.update().values(STATUS = 0)
         session.commit()
         return Response(status_code=HTTP_204_NO_CONTENT)
-    else:
-        session.execute(t_sedes.delete().where(t_sedes.c.SEDE_ID == id))
-        session.commit()
-        return Response(status_code=HTTP_204_NO_CONTENT)
+    
+    session.execute(t_sedes.delete().where(t_sedes.c.SEDE_ID == id))
+    session.commit()
+    return Response(status_code=HTTP_204_NO_CONTENT)
