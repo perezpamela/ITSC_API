@@ -138,11 +138,13 @@ def DeleteSedeCarrera(id: int, session: Session = Depends(Get_Session)):
     sedecarrera = session.execute(select(t_scarrera).where(t_scarrera.c.SEDECARRERA_ID == id)).first()
     has_children = False #Cuando esté hecha 'inscripciones', aplicar has_children filtrando si hay relaciones.
 
-    if has_children:
-        session.t_scarrera.update().values(STATUS = 0)
-        session.commit()
-        return Response(status_code = HTTP_204_NO_CONTENT)
-    
-    session.execute(t_scarrera.delete().where(t_scarrera.c.SEDECARRERA_ID == id))
-    session.commit()
-    return Response(status_code = HTTP_204_NO_CONTENT)
+    if sedecarrera:
+        if has_children:
+            session.execute(t_scarrera.update().values(STATUS = 0).where(t_scarrera.c.SEDECARRERA_ID == id))
+            session.commit()
+            return Response(status_code = HTTP_204_NO_CONTENT)
+        else:
+            session.execute(t_scarrera.delete().where(t_scarrera.c.SEDECARRERA_ID == id))
+            session.commit()
+            return Response(status_code = HTTP_204_NO_CONTENT)
+    raise HTTPException(status_code=404, detail='La SedeCarrera solicitada no existe.')

@@ -98,13 +98,14 @@ def Delete_Alumno(id: int, session: Session = Depends(Get_Session)):
     alumno = session.execute(select(t_alumnos).where(t_alumnos.c.ALUMNO_ID == id)).first()
     has_children = False #session(execute(select(t_inscripciones).where(t_inscripciones.c.ALUMNO_ID == id))).first()
 
-    if not alumno: 
-        raise HTTPException(status_code=404, detail='El id especificado no existe.')
-    elif has_children:
-        session.t_alumnos.update().values(STATUS = 0)
-        session.commit()
-        return Response(status_code=HTTP_204_NO_CONTENT)
-    else:
-        session.execute(delete(t_alumnos).where(t_alumnos.c.ALUMNO_ID == id))
-        session.commit()
-        return Response(status_code=HTTP_204_NO_CONTENT)
+    if alumno: 
+        if has_children:
+            session.execute(t_alumnos.update().values(STATUS = 0).where(t_alumnos.c.ALUMNO_ID == id))
+            session.commit()
+            return Response(status_code=HTTP_204_NO_CONTENT)
+        else:
+            session.execute(delete(t_alumnos).where(t_alumnos.c.ALUMNO_ID == id))
+            session.commit()
+            return Response(status_code=HTTP_204_NO_CONTENT)
+        
+    raise HTTPException(status_code=404, detail='El alumno especificado no existe.')

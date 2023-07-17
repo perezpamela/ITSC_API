@@ -58,11 +58,14 @@ def Delete_Carrera(id: int, session: Session = Depends(Get_Session)):
     '''Elimina si el registro todavía no está relacionado. Desactiva (status 0) si ya hay relaciones creadas.'''
     carrera = session.execute(select(t_carreras).where(t_carreras.c.CARRERA_ID == id)).first()
     has_children = False#session.execute(select(t_sedecarrera.c.CARRERA_ID == id)).fetchall()
-    if has_children:
-        session.t_carreras.update().values(STATUS = 0)
-        session.commit()
-        return Response(status_code=HTTP_204_NO_CONTENT)
-    else:
-        session.execute(t_carreras.delete().where(t_carreras.c.CARRERA_ID == id))
-        session.commit()
-        return Response(status_code=HTTP_204_NO_CONTENT)
+    
+    if carrera:
+        if has_children:
+            session.execute(t_carreras.update().values(STATUS = 0).where(t_carreras.c.CARRERA_ID == id))
+            session.commit()
+            return Response(status_code=HTTP_204_NO_CONTENT)
+        else:
+            session.execute(t_carreras.delete().where(t_carreras.c.CARRERA_ID == id))
+            session.commit()
+            return Response(status_code=HTTP_204_NO_CONTENT)
+    raise HTTPException(status_code=404, detail='La carrera solicitada no existe.')

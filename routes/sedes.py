@@ -82,11 +82,13 @@ def Delete_Sede(id: int, session: Session = Depends(Get_Session)):
     sede = session.execute(select(t_sedes).where(t_sedes.c.SEDE_ID == id)).first()
     has_children = session.execute(select(t_scarrera).where(t_scarrera.c.SEDE_ID == sede.SEDE_ID)).first()
 
-    if has_children:
-        session.t_sedes.update().values(STATUS = 0)
-        session.commit()
-        return Response(status_code=HTTP_204_NO_CONTENT)
-    
-    session.execute(t_sedes.delete().where(t_sedes.c.SEDE_ID == id))
-    session.commit()
-    return Response(status_code=HTTP_204_NO_CONTENT)
+    if sede:
+        if has_children:
+            session.execute(t_sedes.update().values(STATUS = 0).where(t_sedes.c.SEDE_ID == id))
+            session.commit()
+            return Response(status_code=HTTP_204_NO_CONTENT)
+        else:
+            session.execute(t_sedes.delete().where(t_sedes.c.SEDE_ID == id))
+            session.commit()
+            return Response(status_code=HTTP_204_NO_CONTENT)
+    raise HTTPException(status_code=404, detail='La sede solicitada no existe.')

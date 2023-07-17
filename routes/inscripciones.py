@@ -19,7 +19,6 @@ def Get_Inscripciones(filtro: str = None, session: Session = Depends(Get_Session
     de las tres entidades (Inscripciones, Alumnos, SedeCarreras)
     Se puede filtrar opcionalmente por TURNO, SEDE, TITULO, ALUMNO'''
     result = []
-    print(filtro)
     if filtro:
         data = session.execute(select(t_inscripciones, t_alumnos, t_scarrera, t_carreras, t_sedes)
         .where(
@@ -169,16 +168,18 @@ def Update_Inscripcion(id:int, inscripcion: Inscripciones, session: Session = De
 def Delete_Inscripcion(id: int, session: Session = Depends(Get_Session)):
     inscripcion = session.execute(select(t_inscripciones).where(t_inscripciones.c.INSCRIPCION_ID == id)).first()
     has_children = False #Verificar con pagos si se puede borrar o poner en 0
-    if has_children:
-        session.execute(t_inscripciones.update().values(STATUS=0).where(t_inscripciones.c.INSCRIPCION_ID == id))
-        session.commit()
-        return Response(status_code=HTTP_204_NO_CONTENT)
-    elif inscripcion:
-        session.execute(t_inscripciones.delete().where(t_inscripciones.c.INSCRIPCION_ID == id))
-        session.commit()
-        return Response(status_code=HTTP_204_NO_CONTENT)
-    else:
-        raise HTTPException(status_code=404, detail='La inscrripción solicitada no existe.')
+    
+    if inscripcion:
+        if has_children:
+            session.execute(t_inscripciones.update().values(STATUS=0).where(t_inscripciones.c.INSCRIPCION_ID == id))
+            session.commit()
+            return Response(status_code=HTTP_204_NO_CONTENT)
+        else:
+            session.execute(t_inscripciones.delete().where(t_inscripciones.c.INSCRIPCION_ID == id))
+            session.commit()
+            return Response(status_code=HTTP_204_NO_CONTENT)
+   
+    raise HTTPException(status_code=404, detail='La inscrripción solicitada no existe.')
         
 
 
