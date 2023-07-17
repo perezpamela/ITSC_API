@@ -6,6 +6,7 @@ from routes.sedes import sedes
 from routes.alumnos import alumnos
 from routes.carreras import carreras
 from routes.sedecarrera import sedecarrera
+from routes.inscripciones import inscripciones
 
 
 APP = FastAPI(title='Instituto Técnico Superior Córdoba API', 
@@ -18,6 +19,7 @@ APP.include_router(sedes)
 APP.include_router(carreras)
 APP.include_router(sedecarrera)
 APP.include_router(alumnos)
+APP.include_router(inscripciones)
 
 if __name__=='__main__':
     uvicorn.run('app:APP', reload=True)

@@ -76,11 +76,11 @@ def Update_Sede(sede: Sede, id: int, session: Session = Depends(Get_Session)):
     return session.execute(select(t_sedes).where(t_sedes.c.SEDE_ID == id)).first()
 
 
-@sedes.put('/delete/{id}')
+@sedes.delete('/delete/{id}')
 def Delete_Sede(id: int, session: Session = Depends(Get_Session)):
     ''' Elimina si el registro todavía no está relacionado. Desactiva (status 0) si ya hay relaciones creadas.'''
     sede = session.execute(select(t_sedes).where(t_sedes.c.SEDE_ID == id)).first()
-    has_children = session.execute(select(t_scarrera).where(t_scarrera.SEDE_ID == sede.SEDE_ID)).first()
+    has_children = session.execute(select(t_scarrera).where(t_scarrera.c.SEDE_ID == sede.SEDE_ID)).first()
 
     if has_children:
         session.t_sedes.update().values(STATUS = 0)
