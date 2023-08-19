@@ -11,6 +11,7 @@ from routes.pagos import pagos
 from routes.docentes import docentes
 from routes.preceptores import preceptores
 from routes.materias import materias
+from routes.materiacarrera import materiacarrera
 
 
 APP = FastAPI(title='Instituto Técnico Superior Córdoba API', 
@@ -28,6 +29,7 @@ APP.include_router(pagos)
 APP.include_router(docentes)
 APP.include_router(preceptores)
 APP.include_router(materias)
+APP.include_router(materiacarrera)
 
 if __name__=='__main__':
     uvicorn.run('app:APP', reload=True)
