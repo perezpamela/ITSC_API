@@ -13,6 +13,7 @@ from routes.preceptores import preceptores
 from routes.materias import materias
 from routes.materiacarrera import materiacarrera
 from routes.horarios import horarios
+from routes.clases import clases
 
 
 APP = FastAPI(title='Instituto Técnico Superior Córdoba API', 
@@ -32,6 +33,7 @@ APP.include_router(preceptores)
 APP.include_router(materias)
 APP.include_router(materiacarrera)
 APP.include_router(horarios)
+APP.include_router(clases)
 
 if __name__=='__main__':
     uvicorn.run('app:APP', reload=True)

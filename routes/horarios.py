@@ -14,11 +14,7 @@ def Get_Horarios(filtro: str = None, session: Session = Depends(Get_Session)):
         horarios = session.execute(select(t_horarios)).fetchall()
     else:
         horarios = session.execute(
-            select(t_horarios).where(
-            or_(
-            t_horarios.c.MATERIACARRERA_ID == filtro
-            
-            ))).fetchall()
+            select(t_horarios).where(t_horarios.c.MATERIACARRERA_ID == filtro)).fetchall()
     return horarios
 
 
