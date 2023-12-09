@@ -83,7 +83,7 @@ def Get_Asistencia(id:int, session: Session = Depends(Get_Session)):
                                                     t_asistencias.c.CLASE_ID == t_clases.c.CLASE_ID,
                                                     t_clases.c.MATERIACARRERA_ID == t_materiacarrera.c.MATERIACARRERA_ID,
                                                     t_materiacarrera.c.MATERIA_ID == t_materias.c.MATERIA_ID
-                                                    ))).fetchone()
+                                                    ))).first()
     if not asistencia:
         return HTTPException(status_code=404,detail='La asistencia solicitada no existe.')
     
@@ -122,7 +122,7 @@ def Add_Asistencia(asistencia: Asistencia, session: Session = Depends(Get_Sessio
     session.commit()
 
     id = resultado.inserted_primary_key[0]
-    asistencia = session.execute(select(t_asistencias).where(t_asistencias.c.ASISTENCIA_ID == id)).fetchone()
+    asistencia = session.execute(select(t_asistencias).where(t_asistencias.c.ASISTENCIA_ID == id)).first()
 
     return asistencia
 

@@ -47,7 +47,7 @@ def Get_SedeCarrera(id: int,session: Session = Depends(Get_Session)):
         scarrera.SEDE_DIA_HASTA     = sc.DIA_HASTA
 
     else:
-        return 'No data found'
+        return HTTPException(status_code=404, detail='No se encontraron datos.')
         
     return scarrera
 
