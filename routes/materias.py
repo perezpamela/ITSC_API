@@ -7,7 +7,7 @@ from schemas.inscripciones import Inscripciones, InscripcionesOUTPUT
 from models.materias import materias as t_materias
 from schemas.materias import Materia
 
-materias = APIRouter(prefix="/API/MATERIAS")
+materias = APIRouter(prefix="/API/MATERIAS", tags=["Materias"])
 
 @materias.get('/')
 def Get_Materias(filtro: str = None, session: Session = Depends(Get_Session)):

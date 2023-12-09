@@ -9,7 +9,7 @@ from schemas.cursantes import Cursante, CursanteOUTPUT
 from starlette.status import HTTP_204_NO_CONTENT
 from datetime import datetime
 
-cursantes = APIRouter(prefix='/API/CURSANTES')
+cursantes = APIRouter(prefix='/API/CURSANTES', tags=["Cursantes"])
 
 @cursantes.get('/')
 def Get_Cursante(filtro: str = None, session: Session = Depends(Get_Session)):
@@ -142,3 +142,4 @@ def Delete_Cursante(id:int, session: Session = Depends(Get_Session)):
             return Response(status_code=HTTP_204_NO_CONTENT)
 
     raise HTTPException(status_code=404, detail='El cursante solicitado no existe.')
+

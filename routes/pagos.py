@@ -11,7 +11,7 @@ from models.sedes import sedes as t_sedes
 from starlette.status import HTTP_204_NO_CONTENT
 from datetime import date, datetime
 
-pagos = APIRouter(prefix='/API/PAGOS')
+pagos = APIRouter(prefix='/API/PAGOS', tags=["Pagos"])
 
 @pagos.get('/')
 def Get_Pagos(filtro: str = None, session: Session = Depends(Get_Session)):

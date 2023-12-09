@@ -6,7 +6,7 @@ from starlette.status import HTTP_204_NO_CONTENT
 from sqlmodel import select, or_
 from datetime import datetime
 
-clases = APIRouter(prefix='/API/CLASES')
+clases = APIRouter(prefix='/API/CLASES', tags=["Clases"])
 
 @clases.get('/')
 def Get_Clases(filtro: str = None, session: Session = Depends(Get_Session)):

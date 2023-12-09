@@ -9,7 +9,7 @@ from models.sedes import sedes as t_sedes
 from models.carreras import carreras as t_carreras
 
 
-sedecarrera = APIRouter(prefix='/API/SEDECARRERA')
+sedecarrera = APIRouter(prefix='/API/SEDECARRERA', tags=["SedeCarrera"])
 
 @sedecarrera.get('/{id}')
 def Get_SedeCarrera(id: int,session: Session = Depends(Get_Session)):
@@ -17,14 +17,18 @@ def Get_SedeCarrera(id: int,session: Session = Depends(Get_Session)):
     de las tres entidades (sedecarrera, sede, carrera)'''
     scarrera = SCarreraOUTPUT()
 
-    sc = session.execute(select(t_scarrera, t_sedes, t_carreras).where(and_(
+    sc = session.execute(select(t_scarrera, t_sedes, t_carreras).where(
+        and_(
         t_scarrera.c.SEDECARRERA_ID == id,
         t_scarrera.c.SEDE_ID        == t_sedes.c.SEDE_ID,
         t_scarrera.c.CARRERA_ID     == t_carreras.c.CARRERA_ID
     ))).first()
-   
+    
+    
     if sc:
         scarrera.SEDECARRERA_ID     = sc.SEDECARRERA_ID
+        scarrera.SEDE_ID            = sc.SEDE_ID
+        scarrera.CARRERA_ID         = sc.CARRERA_ID
         scarrera.TURNO              = sc.TURNO
         scarrera.CODIGO_CARRERA     = sc.CODIGO_CARRERA
         scarrera.STATUS             = sc.STATUS
@@ -41,9 +45,10 @@ def Get_SedeCarrera(id: int,session: Session = Depends(Get_Session)):
         scarrera.SEDE_HORARIO_HASTA = sc.HORA_HASTA
         scarrera.SEDE_DIA_DESDE     = sc.DIA_DESDE
         scarrera.SEDE_DIA_HASTA     = sc.DIA_HASTA
+
     else:
         return 'No data found'
-
+        
     return scarrera
 
 @sedecarrera.get('/')

@@ -6,7 +6,8 @@ from datetime import datetime
 from models.sedes import sedes as t_sedes
 from models.sedecarrera import sedecarrera as t_scarrera
 from schemas.sedes import Sede
-sedes = APIRouter(prefix='/API/SEDES')
+import logging
+sedes = APIRouter(prefix='/API/SEDES', tags=["Sedes"])
 
 @sedes.get('/')
 def Get_Sedes(desc: str = Query(None, description="desc es un parámetro opcional"), 
@@ -21,6 +22,7 @@ def Get_Sedes(desc: str = Query(None, description="desc es un parámetro opciona
 @sedes.get('/{id}')
 def Get_Sede_by_Id(id: int, session: Session = Depends(Get_Session)):
     '''Devuelve un único registro, filtrando la búsqueda por el id proporcionado como argumento.'''
+
     sede = session.execute(select(t_sedes).where(t_sedes.c.SEDE_ID == id)).first()
     if sede:
         return sede

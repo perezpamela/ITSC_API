@@ -6,7 +6,7 @@ from schemas.horarios import Horario
 from datetime import datetime
 from starlette.status import HTTP_204_NO_CONTENT
 
-horarios = APIRouter(prefix="/API/HORARIOS")
+horarios = APIRouter(prefix="/API/HORARIOS", tags=["Horarios"])
 
 @horarios.get('/')
 def Get_Horarios(filtro: str = None, session: Session = Depends(Get_Session)):

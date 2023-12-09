@@ -7,7 +7,7 @@ from schemas.preceptores import Preceptor
 from datetime import datetime
 
 
-preceptores = APIRouter(prefix="/API/PRECEPTORES")
+preceptores = APIRouter(prefix="/API/PRECEPTORES", tags=["Preceptores"])
 
 @preceptores.get('/')
 def Get_Preceptores(filtro: str = None, session: Session = Depends(Get_Session)):

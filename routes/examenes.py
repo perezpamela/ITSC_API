@@ -5,7 +5,7 @@ from db.config import Session, Get_Session
 from schemas.examenes import Examen
 from sqlmodel import select, or_
 from datetime import datetime
-examenes = APIRouter(prefix='/API/EXAMENES')
+examenes = APIRouter(prefix='/API/EXAMENES', tags=["Exámenes"])
 
 @examenes.get('/')
 def Get_Exanenes(filtro: str = None, session: Session = Depends(Get_Session)):

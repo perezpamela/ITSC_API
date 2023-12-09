@@ -13,7 +13,7 @@ from schemas.materiacarrera import Materiacarrera, MateriacarreraOUTPUT
 from datetime import datetime
 
 
-materiacarrera = APIRouter(prefix="/API/MATERIACARRERA")
+materiacarrera = APIRouter(prefix="/API/MATERIACARRERA", tags=["MateriaCarrera"])
 
 @materiacarrera.get("/")
 def Get_Materiacarreras(filtro: str = None, session: Session = Depends(Get_Session)):

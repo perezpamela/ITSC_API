@@ -6,7 +6,7 @@ from models.carreras import carreras as t_carreras
 from schemas.carreras import Carrera
 from datetime import datetime
 
-carreras = APIRouter(prefix='/API/CARRERAS')
+carreras = APIRouter(prefix='/API/CARRERAS', tags=["Carreras"])
 
 @carreras.get('/')
 def Get_Carreras(descripcion: str = None, session: Session = Depends(Get_Session)):

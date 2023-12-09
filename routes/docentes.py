@@ -7,7 +7,7 @@ from schemas.docentes import Docente
 from datetime import datetime
 
 
-docentes = APIRouter(prefix="/API/DOCENTES")
+docentes = APIRouter(prefix="/API/DOCENTES", tags=["Docentes"])
 
 @docentes.get('/')
 def Get_Docentes(filtro: str = None, session: Session = Depends(Get_Session)):

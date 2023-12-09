@@ -11,7 +11,7 @@ from models.alumnos import alumnos as t_alumnos
 from models.sedes import sedes as t_sedes
 
 
-inscripciones = APIRouter(prefix='/API/INSCRIPCIONES')
+inscripciones = APIRouter(prefix='/API/INSCRIPCIONES', tags=["Inscripciones"])
 
 @inscripciones.get('/')
 def Get_Inscripciones(filtro: str = None, session: Session = Depends(Get_Session)):

@@ -9,12 +9,13 @@ from datetime import datetime
 
 
 
-alumnos = APIRouter(prefix='/API/ALUMNOS')
+alumnos = APIRouter(prefix='/API/ALUMNOS', tags=["Alumnos"])
 
 @alumnos.get('/')
 def Get_Alumnos(filtro: str = None, session: Session = Depends(Get_Session)):
     '''Busca alumnos. Si se pasa por parámetro un filtro, va a buscar por nombre, apellido o dni.
     Si no se pasa ningún filtro trae todos.'''
+
     if filtro:
         alumnos = session.execute(
             select(t_alumnos).where(

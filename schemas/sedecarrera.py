@@ -5,7 +5,7 @@ class SCarrera(BaseModel):
     SEDECARRERA_ID:                    int | None
     CARRERA_ID:                        int | None
     SEDE_ID:                           int | None
-    TURNO:                             int | None
+    TURNO:                             str | None
     CODIGO_CARRERA:                    int | None
     STATUS:                            int | None
     ADD_DATE:                     datetime | None   
