@@ -5,6 +5,7 @@ from db.config import Session, Get_Session
 from sqlmodel import select, delete, or_
 from schemas.alumnos import Alumnos
 from datetime import datetime
+from routes.login import Guarda_Password
 
 
 
@@ -48,7 +49,7 @@ def Add_Alumno(alumno: Alumnos, session: Session = Depends(Get_Session)):
         "APELLIDO":                alumno.APELLIDO,
         "FECHA_NACIMIENTO":        alumno.FECHA_NACIMIENTO,
         "DNI":                     alumno.DNI,
-        "PASSWORD":                alumno.PASSWORD,
+        "PASSWORD":                Guarda_Password(alumno.PASSWORD),
         "TELEFONO":                alumno.TELEFONO,
         "EMAIL":                   alumno.EMAIL,
         "DIRECCION":               alumno.DIRECCION,

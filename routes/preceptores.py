@@ -5,6 +5,7 @@ from sqlmodel import select, or_
 from db.config import Get_Session, Session
 from schemas.preceptores import Preceptor
 from datetime import datetime
+from routes.login import Guarda_Password
 
 
 preceptores = APIRouter(prefix="/API/PRECEPTORES", tags=["Preceptores"])
@@ -39,7 +40,7 @@ def Add_Preceptor(preceptor: Preceptor, session: Session = Depends(Get_Session))
         "APELLIDO": preceptor.APELLIDO,
         "FECHA_NACIMIENTO": preceptor.FECHA_NACIMIENTO,
         "DNI": preceptor.DNI,
-        "PASSWORD": preceptor.PASSWORD,
+        "PASSWORD": Guarda_Password(preceptor.PASSWORD),
         "TELEFONO": preceptor.TELEFONO,
         "EMAIL": preceptor.EMAIL
     }

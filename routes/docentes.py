@@ -5,6 +5,7 @@ from sqlmodel import select, and_, or_
 from db.config import Get_Session, Session
 from schemas.docentes import Docente
 from datetime import datetime
+from routes.login import Guarda_Password
 
 
 docentes = APIRouter(prefix="/API/DOCENTES", tags=["Docentes"])
@@ -39,7 +40,7 @@ def Add_Docente(docente: Docente, session: Session = Depends(Get_Session)):
         "APELLIDO": docente.APELLIDO,
         "FECHA_NACIMIENTO": docente.FECHA_NACIMIENTO,
         "DNI": docente.DNI,
-        "PASSWORD": docente.PASSWORD,
+        "PASSWORD": Guarda_Password(docente.PASSWORD),
         "TELEFONO": docente.TELEFONO,
         "EMAIL": docente.EMAIL
     }

@@ -19,6 +19,7 @@ from routes.examenes import examenes
 from routes.cursantes import cursantes
 from routes.asistencias import asistencias
 from routes.notas import notas
+from routes.login import login
 
 
 APP = FastAPI(title='Instituto Técnico Superior Córdoba API', 
@@ -44,6 +45,7 @@ APP.include_router(examenes)
 APP.include_router(cursantes)
 APP.include_router(asistencias)
 APP.include_router(notas)
+APP.include_router(login)
 
 if __name__=='__main__':
     uvicorn.run('app:APP', reload=True)
@@ -81,5 +83,6 @@ tags_metadata = [
     {"name": "Preceptores", "description": "Operaciones relacionadas con la tabla preceptores."},
     {"name": "SedeCarrera", "description": "Operaciones relacionadas con la tabla sedecarrera."},
     {"name": "Sedes", "description": "Operaciones relacionadas con la tabla sedes."},
-    {"name": "Notas", "description": "Operaciones relacionadas con la tabla notas."}
+    {"name": "Notas", "description": "Operaciones relacionadas con la tabla notas."},
+    {"name": "Login", "description": "Verificación para loggeo."}
 ]
