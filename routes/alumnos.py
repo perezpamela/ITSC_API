@@ -94,7 +94,7 @@ def Update_Alumno(id: int, alumno: Alumnos, session: Session = Depends(Get_Sessi
     else:
         raise HTTPException(status_code=404, detail='El alumno especificado no existe.')
 
-@alumnos.put('/delete/{id}')
+@alumnos.delete('/delete/{id}')
 def Delete_Alumno(id: int, session: Session = Depends(Get_Session)):
     '''Elimina si el registro todavía no está relacionado. Desactiva (status 0) si ya hay relaciones creadas.'''
     alumno = session.execute(select(t_alumnos).where(t_alumnos.c.ALUMNO_ID == id)).first()

@@ -135,7 +135,7 @@ def UpdateSedeCarrera(id: int, scarrera:SCarrera, session: Session = Depends(Get
 
     return session.execute(select(t_scarrera).where(t_scarrera.c.SEDECARRERA_ID == id)).first()
 
-@sedecarrera.put('/delete/{id}')
+@sedecarrera.delete('/delete/{id}')
 def DeleteSedeCarrera(id: int, session: Session = Depends(Get_Session)):
     '''Elimina si el registro todavía no está relacionado. 
     Desactiva (status = 0) si el registro ya tiene relaciones creadas.'''
