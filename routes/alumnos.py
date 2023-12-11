@@ -6,6 +6,7 @@ from sqlmodel import select, delete, or_
 from schemas.alumnos import Alumnos
 from datetime import datetime
 from routes.login import Guarda_Password
+from routes.auth import Verifica
 
 
 

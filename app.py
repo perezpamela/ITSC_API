@@ -20,10 +20,32 @@ from routes.cursantes import cursantes
 from routes.asistencias import asistencias
 from routes.notas import notas
 from routes.login import login
+from routes.auth import Verifica
+
+from schemas.usuario import Usuario
+from fastapi import Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
 
 
 APP = FastAPI(title='Instituto Técnico Superior Córdoba API', 
               description='API Gestión de datos ITSC | Prácticas Profesionalizantes II - Tec. Sup. en Desarrollo de Software')
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+@APP.post("/token")
+def Generador_Token(form_data: OAuth2PasswordRequestForm = Depends()):
+    usr = Usuario()
+    usr.email = form_data.username
+    usr.password_login = form_data.password
+    verifica = Verifica(usr)
+    if verifica == False or verifica == 404:
+        raise HTTPException(status_code=401, detail='Los datos de acceso no son válidos.')
+    else: 
+        {"access_token": "token", "token_type": "bearer"}
+
+@APP.get("/Endpoint_Privado/")
+def Ejemplo_Ruta_Privada(token: str = Depends(oauth2_scheme)):
+    return 'Funciona!! :)'
 
 
 @APP.get('/')
