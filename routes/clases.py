@@ -60,13 +60,14 @@ def Update_Clase(id: int, clase: Clase, session: Session = Depends(Get_Session))
             "LAST_UPDATED_DATE": datetime.now()
         }
 
-    try:
-        session.execute(t_clases.update().values(new).where(t_clases.c.CLASE_ID == id))
-        session.commit()
-        return session.execute(select(t_clases).where(t_clases.c.CLASE_ID == id)).first()
-    except Exception as e:
-        error = f'No fue posible actualizar el registro. Error {e}.'
-        return error
+        try:
+            session.execute(t_clases.update().values(new).where(t_clases.c.CLASE_ID == id))
+            session.commit()
+            return session.execute(select(t_clases).where(t_clases.c.CLASE_ID == id)).first()
+        except Exception as e:
+            error = f'No fue posible actualizar el registro. Error {e}.'
+            return error
+    raise HTTPException(status_code=404, detail='El id especificado no existe.')
 
 @clases.delete('/Delete/{id}')
 def Delete_Clase(id: int, session: Session = Depends(Get_Session)):

@@ -63,13 +63,14 @@ def Update_Examen(id: int, examen: Examen, session: Session = Depends(Get_Sessio
             "LAST_UPDATED_DATE": datetime.now()
         }
 
-    try:
-        session.execute(t_examenes.update().values(new).where(t_examenes.c.EXAMEN_ID == id))
-        session.commit()
-        return session.execute(select(t_examenes).where(t_examenes.c.EXAMEN_ID == id)).first()
-    except Exception as e:
-        error = f'No fue posible actualizar el registro. Error {e}.'
-        return error
+        try:
+            session.execute(t_examenes.update().values(new).where(t_examenes.c.EXAMEN_ID == id))
+            session.commit()
+            return session.execute(select(t_examenes).where(t_examenes.c.EXAMEN_ID == id)).first()
+        except Exception as e:
+            error = f'No fue posible actualizar el registro. Error {e}.'
+            return error
+    raise HTTPException(status_code=404, detail='El id solicitado no existe.')
 
 @examenes.delete('/Delete/{id}')
 def Delete_Examen(id: int, session: Session = Depends(Get_Session)):

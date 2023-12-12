@@ -56,13 +56,14 @@ def Update_Horario(id: int, horario: Horario, session: Session = Depends(Get_Ses
             "LAST_UPDATED_DATE": datetime.now()
         }
 
-    try:
-        session.execute(t_horarios.update().values(new).where(t_horarios.c.HORARIO_ID == id))
-        session.commit()
-        return session.execute(select(t_horarios).where(t_horarios.c.HORARIO_ID == id)).first()
-    except Exception as e:
-        error = f'No fue posible actualizar el registro. Error {e}.'
-        return error
+        try:
+            session.execute(t_horarios.update().values(new).where(t_horarios.c.HORARIO_ID == id))
+            session.commit()
+            return session.execute(select(t_horarios).where(t_horarios.c.HORARIO_ID == id)).first()
+        except Exception as e:
+            error = f'No fue posible actualizar el registro. Error {e}.'
+            return error
+    return HTTPException(status_code=404, detail='No se encontraron registros con el id indicado.')
  
 
 

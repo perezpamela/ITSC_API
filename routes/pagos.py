@@ -27,6 +27,7 @@ def Get_Pagos(filtro: str = None, session: Session = Depends(Get_Session)):
                     and_(
                         t_pagos.c.INSCRIPCION_ID == t_inscripciones.c.INSCRIPCION_ID,
                         t_inscripciones.c.ALUMNO_ID == t_alumnos.c.ALUMNO_ID,
+                        t_inscripciones.c.SEDECARRERA_ID == t_scarrera.c.SEDECARRERA_ID,
                         t_scarrera.c.CARRERA_ID == t_carreras.c.CARRERA_ID,
                         t_scarrera.c.SEDE_ID == t_sedes.c.SEDE_ID,
                         or_(
@@ -52,6 +53,7 @@ def Get_Pagos(filtro: str = None, session: Session = Depends(Get_Session)):
                     and_(
                         t_pagos.c.INSCRIPCION_ID == t_inscripciones.c.INSCRIPCION_ID,
                         t_inscripciones.c.ALUMNO_ID == t_alumnos.c.ALUMNO_ID,
+                        t_inscripciones.c.SEDECARRERA_ID == t_scarrera.c.SEDECARRERA_ID,
                         t_scarrera.c.CARRERA_ID == t_carreras.c.CARRERA_ID,
                         t_scarrera.c.SEDE_ID == t_sedes.c.SEDE_ID))).fetchall()
         
@@ -92,6 +94,7 @@ def Get_Pago(id: int, session: Session = Depends(Get_Session)):
                 t_pagos.c.PAGO_ID == id,
                 t_pagos.c.INSCRIPCION_ID == t_inscripciones.c.INSCRIPCION_ID,
                 t_inscripciones.c.ALUMNO_ID == t_alumnos.c.ALUMNO_ID,
+                t_inscripciones.c.SEDECARRERA_ID == t_scarrera.c.SEDECARRERA_ID,
                 t_scarrera.c.CARRERA_ID == t_carreras.c.CARRERA_ID,
                 t_scarrera.c.SEDE_ID == t_sedes.c.SEDE_ID
                )).first()

@@ -14,7 +14,7 @@ def Get_Sedes(desc: str = Query(None, description="desc es un parámetro opciona
               session: Session = Depends(Get_Session)):
     '''Devuelve todas las sedes cargadas en la BD.'''
     if desc:
-        return session.execute(select(t_sedes).where(t_sedes.c.DESCRIPCION == desc)).fetchall()
+        return session.execute(select(t_sedes).where(t_sedes.c.DESCRIPCION.contains(desc))).fetchall()
     else:
         return session.execute(select(t_sedes)).fetchall()
  
